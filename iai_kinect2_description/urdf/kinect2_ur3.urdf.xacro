@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<robot name="kinect2"
+       xmlns:xacro="http://ros.org/wiki/xacro"       
+       xmlns:interface="http://ros.org/wiki/xacro"> 
+  <!--http://www.ros.org/wiki/xacro-->
+  <!-- ur3 common stuff -->
+  <xacro:include filename="$(find ur_description)/urdf/common.gazebo.xacro" />
+
+  <!-- ur3 -->
+  <xacro:include filename="$(find ur_description)/urdf/ur3.urdf.xacro" />
+
+  <!-- arm -->
+  <xacro:ur3_robot prefix="" joint_limited="true"/>
+
+  <link name="world" />
+
+  <joint name="world_joint" type="fixed">
+    <parent link="world" />
+    <child link = "base_link" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+  </joint>  
+  
+  <!-- kinect2 -->
+  <xacro:include filename="$(find iai_kinect2_description)/urdf/kinect2.urdf.xacro" />
+
+  <!-- arm -->
+  <xacro:kinect2_xacro prefix=" " parent="kinect2_link" />
+  
+  <!--xacro:kinect2_v0 name="complete" parent="camera_link"/-->
+  <!--"-1.57 0.0 0.0"-->
+  
+  <link name="kinect2_link"/>
+
+  <joint name="ur_kinect2_joint" type="fixed">
+    <parent link="base" />
+    <child link = "kinect2_link" />
+    <origin xyz="-0.406686 1.90371 0.471675" rpy="-1.51472 -0.0107393 -2.96317" />  
+  </joint>
+  
+<!-- origin xyz="-0.396686 1.73371 0.471675" rpy="-1.51472 -0.0107393 -2.96317" /-->
+  
+</robot>

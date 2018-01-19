@@ -3,9 +3,9 @@
 <!-- Copyright Universitaet Bremen - Instititute for Artificial Intelligence. Author: Alexis Maldonado -->
 <!-- License: GPLv3+ -->
 
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="kinect2"> 
+<robot xmlns:xacro="http://ros.org/wiki/xacro"> 
 
-  <xacro:macro name="kinect2_xacro" params="prefix parent *origin">
+  <xacro:macro name="kinect2_xacro" params="prefix parent">
 
     <material name="Kinect2Grey">
       <color rgba="0.15 0.15 0.15 1.0"/>
@@ -14,12 +14,21 @@
 
     <!-- Joint connecting the parent to our frame_in -->
     <joint name="${prefix}_kinect2_in_joint" type="fixed">
-      <xacro:insert_block name="origin"/>
+      <!--xacro:insert_block name="origin"/-->      
       <parent link="${parent}"/>
-      <child link="${prefix}_kinect2_rgb_optical_frame"/>
+      <child link="${prefix}kinect2_rgb_optical_frame"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
     </joint>
 
-    <link name="${prefix}_kinect2_rgb_optical_frame">
+    <link name="${prefix}kinect2_rgb_optical_frame">
+      <!--inertial>
+        <mass value="0.01" />
+        <origin xyz=" 0 0 0 " />
+        <inertia  ixx="0.00012411765597" ixy="0.0" ixz="0.0"
+                 iyy="0.00015218160428" iyz="0.0"
+                 izz="0.00011763977943" />
+      </inertial-->
+
       <visual>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
@@ -37,6 +46,17 @@
         </geometry>
       </collision>
     </link>
+
+    
+    <joint name="kinect2_rgb_joint" type="fixed">
+      <origin xyz="-0.0520171521241 -0.000240451181123 0.000294544694029" rpy="0.00178209349915 -0.000222819786098 -0.00114226514527"/>
+      <parent link="${prefix}kinect2_rgb_optical_frame"/>
+      <child link="${prefix}kinect2_ir_optical_frame"/>
+    </joint>
+
+    <link name="${prefix}kinect2_ir_optical_frame"/>
+    
+
 
   </xacro:macro>
 </robot>
